@@ -1,0 +1,73 @@
+schema_version = "1.0.0"
+
+id = "whisky_helper_by_soy_milk_whisky"
+version = "0.1.1"
+name = "Whisky Helper"
+tagline = "Whisky Helper"
+maintainer = "Soy Milk Whisky <skysmission@outlook.com>"
+
+type = "add-on"
+
+# 可选：文档、支持、源文件等的链接
+website = "https://github.com/skys-mission/whisky_helper_for_blender"
+
+# # 可选：Blender 和服务器定义的标签列表，参见：
+# # https://docs.blender.org/manual/en/dev/advanced/extensions/tags.html
+tags = ["3D View", "Camera", "Animation", "Render"]
+
+blender_version_min = "3.6.0"
+
+# 可选：支持的最大版本
+# blender_version_max = "5.1.0"
+
+# 符合 https://spdx.org/licenses/ 的许可证（使用 "SPDX: 前缀）
+# https://docs.blender.org/manual/en/dev/advanced/extensions/licenses.html
+license = [
+    "SPDX:GPL-3.0",
+]
+# 可选：某些许可证要求。
+copyright = [
+    "2024-2024 Soy Milk Whisky",
+    "2024 https://github.com/skys-mission/whisky_helper_for_blender",
+]
+
+# # 可选：支持的平台列表。不写默认全部
+platforms = ["windows-x64"]
+
+
+# # 可选：捆绑第三方 Python 模块。
+# # https://docs.blender.org/manual/en/dev/advanced/extensions/python_wheels.html
+# wheels = [
+#   "./wheels/hexdump-3.3-py3-none-any.whl",
+#   "./wheels/jsmin-3.0.1-py3-none-any.whl",
+# ]
+
+# # 可选：扩展可以列出它们将需要的资源：
+# # * 文件（用于任何文件系统操作）
+# # * 网络（用于互联网访问）
+# # * 剪贴板（读取和/或写入系统剪贴板）
+# # * 摄像头（拍摄照片和视频）
+# # * 麦克风（录制音频）
+# #
+# # 如果使用网络，请记住还要检查 `bpy.app.online_access`
+# # https://docs.blender.org/manual/en/dev/advanced/extensions/addons.html#internet-access
+# #
+# # 对于每个权限，还需要指定为什么需要它。
+# # 保持这是一句简短的句子，结尾没有句号（.）。
+# # 更长的解释请使用文档或详情页面。
+#
+# [permissions]
+# network = "需要将动作捕捉数据同步到服务器"
+# files = "从磁盘导入/导出 FBX"
+# clipboard = "复制和粘贴骨骼变换"
+
+# # 可选：高级构建设置。
+# # https://docs.blender.org/manual/en/dev/advanced/extensions/command_line_arguments.html#command-line-args-extension-build
+# [build]
+# # 这些是默认的构建排除模式。
+# # 如果您需要不同的选项，只需编辑它们即可。
+# paths_exclude_pattern = [
+#   "__pycache__/",
+#   "/.git/",
+#   "/*.zip",
+# ]
