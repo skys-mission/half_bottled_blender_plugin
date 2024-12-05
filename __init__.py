@@ -4,10 +4,20 @@
 Blender Addon 入口
 """
 from .src.core.addon import AddonManager
-from .src.common.addon_info import ADDON_INFO
 
 # 注册插件信息
-bl_info = ADDON_INFO
+bl_info =  {
+    "name": "Whisky Helper",
+    "author": "Soy Milk Whisky, github.com/skys-mission",
+    "version": (0, 2, 0),
+    "blender": (3, 6, 0),
+    "location": "View3D > N-Panel  > Whisky Helper",
+    "description": "Whisky Helper.",
+    "category": "3D View",
+    "doc_url": "https://whiskyai.xyz/doc/blender/addon/whisky_helper_for_blender",
+    "tracker_url": "https://github.com/skys-mission/whisky_helper_for_blender/issues"
+}
+
 
 
 def register():
