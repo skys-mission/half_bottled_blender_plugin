@@ -1,7 +1,7 @@
 schema_version = "1.0.0"
 
 id = "whisky_helper_by_soy_milk_whisky"
-version = "0.1.1"
+version = "0.2.0"
 name = "Whisky Helper"
 tagline = "Whisky Helper"
 maintainer = "Soy Milk Whisky <skysmission@outlook.com>"
