@@ -25,3 +25,15 @@ approach_speed = bpy.props.FloatProperty(
     min=1,
     max=10,
 )
+
+db_threshold = bpy.props.FloatProperty(
+    name="DB Threshold",
+    default=-50.00,
+    min=-65.00,
+    max=0)
+rms_threshold = bpy.props.FloatProperty(
+    name="RMS Threshold",
+    default=0.01,
+    min=0.001,
+    max=1,
+)

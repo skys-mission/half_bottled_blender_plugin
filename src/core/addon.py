@@ -6,7 +6,9 @@
 from ..api.bridge import Bridge
 from ..api.handler.camera import CameraApplySettingsOperator
 from ..api.scene.camera_set_scene import CameraSettingsProperties
-from ..api.scene.mmd_set import lips_audio_path, lips_start_frame, buffer_frame, approach_speed
+from ..api.scene.mmd_set import (lips_audio_path, lips_start_frame, buffer_frame,
+                                 approach_speed, db_threshold, \
+                                 rms_threshold)
 from ..api.scene.render_preset_scene import (
     resolution_preset, aspect_ratio_preset, orientation_preset)
 from ..api.ui.about import AboutPanel
@@ -89,6 +91,8 @@ class AddonManager:
         scene.lips_start_frame = lips_start_frame
         scene.buffer_frame = buffer_frame
         scene.approach_speed = approach_speed
+        scene.db_threshold = db_threshold
+        scene.rms_threshold = rms_threshold
 
     @staticmethod
     def unregister_scene():
@@ -115,6 +119,10 @@ class AddonManager:
             del scene.buffer_frame
         if hasattr(scene, 'approach_speed'):
             del scene.approach_speed
+        if hasattr(scene, 'db_threshold'):
+            del scene.db_threshold
+        if hasattr(scene, 'rms_threshold'):
+            del scene.rms_threshold
 
     @staticmethod
     def register_classes():

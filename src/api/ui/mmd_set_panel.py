@@ -45,6 +45,10 @@ class MMDHelperPanel(bpy.types.Panel):  # pylint: disable=too-few-public-methods
 
         layout.prop(scene, "lips_start_frame")
 
+        layout.prop(scene, "db_threshold")
+
+        layout.prop(scene, "rms_threshold")
+
         layout.prop(scene, "buffer_frame")
 
         layout.prop(scene, "approach_speed")
@@ -81,6 +85,8 @@ class GenLipsOperator(bpy.types.Operator):  # pylint: disable=too-few-public-met
                 context.scene.lips_audio_path,
                 buffer=context.scene.buffer_frame,
                 approach_speed=context.scene.approach_speed,
+                db_threshold=context.scene.db_threshold,
+                rms_threshold=context.scene.rms_threshold,
                 start_frame=context.scene.lips_start_frame,
                 fps=fps)
             meshes = find_mesh()

@@ -2,3 +2,4 @@ lib/*
 *.mp3
 *.wav
 *.mp4
+plib/*

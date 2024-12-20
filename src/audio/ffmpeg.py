@@ -42,14 +42,14 @@ def convert_to_wav_16000(audio_path):
             f"Please ensure the file exists and is executable."
         )
 
-    # Construct the ffmpeg command
     command = [
         ffmpeg_path,
-        "-i", audio_path,  # Input file
-        "-ar", "16000",  # Set sampling rate to 16000Hz
-        "-ac", "1",  # Set mono audio
-        "-y",  # Overwrite the output file if it exists
-        output_path  # Output file path
+        "-i", audio_path,  # 输入文件路径
+        "-af", "loudnorm=I=-14:LRA=11:TP=-1.5",  # 使用 loudnorm 滤镜，设置到 YouTube 推荐标准
+        "-ar", "16000",  # 采样率 16000Hz
+        "-ac", "1",  # 单声道
+        "-y",  # 覆盖输出文件
+        output_path  # 输出文件路径
     ]
 
     # Call ffmpeg

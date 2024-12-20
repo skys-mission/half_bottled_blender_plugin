@@ -5,9 +5,12 @@
 """
 import math
 
+from ..audio.rosa import rosa
 from ..audio.ffmpeg import convert_to_wav_16000
-from ..audio.phoneme import Phoneme
-from ..audio.vosk import run_vosk
+
+
+# from ..audio.phoneme import Phoneme
+# from ..audio.vosk import run_vosk
 
 
 class Lips:  # pylint: disable=too-few-public-methods
@@ -248,15 +251,20 @@ class Lips:  # pylint: disable=too-few-public-methods
         return result
 
     @staticmethod
-    def mmd_lips_gen(wav_path, buffer=0.05, approach_speed=3.0, start_frame=1, fps=24):
+    def mmd_lips_gen(wav_path, buffer=0.05, approach_speed=3.0,
+                     # pylint: disable=too-many-arguments,too-many-positional-arguments
+                     db_threshold=-50, rms_threshold=0.01, start_frame=1,
+                     fps=24):
         """
         ...
         """
         wav_path_16 = convert_to_wav_16000(wav_path)
 
-        json_path = run_vosk(wav_path_16)
-
-        phoneme_data_res = Phoneme.gen(json_path)
+        # json_path = run_vosk(wav_path_16)
+        #
+        # phoneme_data_res1 = Phoneme.gen(json_path)
+        # pprint(phoneme_data_res1)
+        phoneme_data_res = rosa(wav_path_16, db_threshold=db_threshold, rms_threshold=rms_threshold)
 
         keyframes_res = Lips.lips_gen(
             phoneme_data_res,
@@ -274,7 +282,8 @@ class Lips:  # pylint: disable=too-few-public-methods
 
         return frames_res
 
-#
-# lips_res = Lips.mmd_lips_gen("F:\\OBS_Video\\2024-12-04 03-18-58.mp4")
 # from pprint import pprint
+# lips_res = Lips.mmd_lips_gen("F:\\OBS_Video\\test2.wav")
 # pprint(lips_res)
+#
+#
