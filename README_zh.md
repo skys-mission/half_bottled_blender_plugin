@@ -11,6 +11,7 @@
 
 <!-- TOC -->
 * [whisky_helper_for_blender](#whisky_helper_for_blender)
+  * [Download](#download)
   * [功能](#功能)
     * [MMD口型生成](#mmd口型生成)
       * [使用方法](#使用方法)
@@ -22,6 +23,10 @@
   * [高版本如何安装Blender插件](#高版本如何安装blender插件)
   * [开源引用](#开源引用)
 <!-- TOC -->
+
+## Download
+
+https://github.com/skys-mission/whisky_helper_for_blender/releases
 
 ## 功能
 
@@ -83,9 +88,9 @@
 
 ## 开源引用
 
-| 项目                     | 链接                                           | 协议                                     |
-|------------------------|----------------------------------------------|----------------------------------------|
-| FFmpeg                 | https://github.com/FFmpeg/FFmpeg             | GPLv3（Releases中内嵌的工具采用协议，仓库中无ffmpeg代码） |
-| Vosk-API和Vosk AI Model | https://github.com/alphacep/vosk-api         | Apache-2.0                             |
-| CMU Dict               | http://www.speech.cs.cmu.edu/cgi-bin/cmudict | 2-Clause BSD License                   |
-| gout-vosk tool         | https://github.com/skys-mission/gout         | GPLv3                                  |
+| 项目                         | 链接                                             | 协议                                     |
+|----------------------------|------------------------------------------------|----------------------------------------|
+| FFmpeg                     | https://github.com/FFmpeg/FFmpeg               | GPLv3（Releases中内嵌的工具采用协议，仓库中无ffmpeg代码） |
+| ~~Vosk-API和Vosk AI Model~~ | ~~https://github.com/alphacep/vosk-api~~       | Apache-2.0                             |
+| CMU Dict                   | ~~http://www.speech.cs.cmu.edu/cgi-bin/cmudict | 2-Clause BSD License                   |
+| ~~gout-vosk tool~~         | ~~https://github.com/skys-mission/gout~~       | GPLv3                                  |

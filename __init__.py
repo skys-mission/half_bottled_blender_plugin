@@ -6,7 +6,7 @@ Blender Addon 入口
 from .src.core.addon import AddonManager
 
 # 注册插件信息
-bl_info =  {
+bl_info = {
     "name": "Whisky Helper",
     "author": "Soy Milk Whisky, github.com/skys-mission",
     "version": (0, 2, 0),
@@ -17,7 +17,6 @@ bl_info =  {
     "doc_url": "https://whiskyai.xyz/doc/blender/addon/whisky_helper_for_blender",
     "tracker_url": "https://github.com/skys-mission/whisky_helper_for_blender/issues"
 }
-
 
 
 def register():
@@ -36,7 +35,12 @@ def unregister():
 
     本函数在插件卸载时被调用，用于卸载插件。
     """
-    AddonManager.unload_addon()
+    try:
+        AddonManager.unload_addon()
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        from .src.audio.pkg import unload_pkg  # pylint: disable=import-outside-toplevel
+        unload_pkg()
+        raise e
 
 
 if __name__ == "__main__":

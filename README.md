@@ -13,6 +13,7 @@ supports the Windows platform.
 
 <!-- TOC -->
 * [whisky_helper_for_blender](#whisky_helper_for_blender)
+  * [Download](#download)
   * [Features](#features)
     * [MMD Lip Sync Generation](#mmd-lip-sync-generation)
       * [Usage](#usage)
@@ -24,6 +25,10 @@ supports the Windows platform.
   * [How to Install Blender Add-ons in Higher Versions](#how-to-install-blender-add-ons-in-higher-versions)
   * [Open Source References](#open-source-references)
 <!-- TOC -->
+
+## Download
+
+https://github.com/skys-mission/whisky_helper_for_blender/releases
 
 ## Features
 
@@ -90,9 +95,9 @@ Reference: https://docs.blender.org/manual/en/4.2/editors/preferences/addons.htm
 
 ## Open Source References
 
-| Project                    | Link                                         | License                                                                                      |
-|----------------------------|----------------------------------------------|----------------------------------------------------------------------------------------------|
-| FFmpeg                     | https://github.com/FFmpeg/FFmpeg             | GPLv3 (The embedded tools in Releases follow this license, no ffmpeg code in the repository) |
-| Vosk-API and Vosk AI Model | https://github.com/alphacep/vosk-api         | Apache-2.0                                                                                   |
-| CMU Dict                   | http://www.speech.cs.cmu.edu/cgi-bin/cmudict | 2-Clause BSD License                                                                         |
-| gout-vosk tool             | https://github.com/skys-mission/gout         | GPLv3                                                                                        |
+| Project                        | Link                                         | License                                                                                      |
+|--------------------------------|----------------------------------------------|----------------------------------------------------------------------------------------------|
+| FFmpeg                         | https://github.com/FFmpeg/FFmpeg             | GPLv3 (The embedded tools in Releases follow this license, no ffmpeg code in the repository) |
+| ~~Vosk-API and Vosk AI Model~~ | ~~https://github.com/alphacep/vosk-api~~     | Apache-2.0                                                                                   |
+| CMU Dict                       | http://www.speech.cs.cmu.edu/cgi-bin/cmudict | 2-Clause BSD License                                                                         |
+| ~~gout-vosk tool~~             | ~~https://github.com/skys-mission/gout~~     | GPLv3                                                                                        |

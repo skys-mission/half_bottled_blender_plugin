@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2024, https://github.com/skys-mission and SoyMilkWhisky
 """
-This module defines a Blender panel for setting up camera properties.
-It includes UI elements to control the focal length, aperture, depth of field,
-and target object for the camera in the 3D view.
+...
 """
 import bpy  # pylint: disable=import-error
 
@@ -11,9 +9,7 @@ import bpy  # pylint: disable=import-error
 # 定义一个Blender面板类CameraSetPanel，用于在3D视图的UI侧边栏中显示相机设置
 class CameraSetPanel(bpy.types.Panel):  # pylint: disable=too-few-public-methods
     """
-    This class defines a Blender panel for setting up camera properties.
-    It includes UI elements to control the focal length, aperture, depth of field,
-    and target object for the camera in the 3D view.
+    ...
     """
     # 设置面板的标题为"Set Camera"
     bl_label = "Set Camera"

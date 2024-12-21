@@ -48,4 +48,4 @@ class AboutPanel(bpy.types.Panel):  # pylint: disable=too-few-public-methods
         row.label(text="author: 豆浆whisky")
 
         row = layout.row()
-        row.label(text="Soy Milk Whisky wishes you good luck.")
+        row.label(text="QQ群：105619180")
