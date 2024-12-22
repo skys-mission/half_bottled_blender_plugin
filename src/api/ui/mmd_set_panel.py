@@ -53,6 +53,8 @@ class MMDHelperPanel(bpy.types.Panel):  # pylint: disable=too-few-public-methods
 
         layout.prop(scene, "approach_speed")
 
+        layout.prop(scene, "max_morph_value")
+
         layout.operator("mmd.gen_lips")
 
 
@@ -87,6 +89,7 @@ class GenLipsOperator(bpy.types.Operator):  # pylint: disable=too-few-public-met
                 approach_speed=context.scene.approach_speed,
                 db_threshold=context.scene.db_threshold,
                 rms_threshold=context.scene.rms_threshold,
+                max_morph_value=context.scene.max_morph_value,
                 start_frame=context.scene.lips_start_frame,
                 fps=fps)
             meshes = find_mesh()

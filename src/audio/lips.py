@@ -73,7 +73,7 @@ class Lips:  # pylint: disable=too-few-public-methods
         return Lips._clamp(value, 0.0, peak_value)
 
     @staticmethod
-    def lips_gen(phoneme_data, buffer=0.05, approach_speed=3.0):
+    def lips_gen(phoneme_data, buffer=0.05, approach_speed=3.0, max_morph_value=1.0):
         """
         生成口型关键帧。
 
@@ -117,7 +117,7 @@ class Lips:  # pylint: disable=too-few-public-methods
                 lips.append({
                     "time": round(mid_time, 3),  # 中间时间
                     "morph": morph,  # 口型
-                    "value": 1.0,  # 中间时完全打开口型
+                    "value": max_morph_value,  # 中间时完全打开口型
                     "frame_type": "middle",  # 标记为中间帧
                 })
 
@@ -142,7 +142,7 @@ class Lips:  # pylint: disable=too-few-public-methods
                                 buffer_start,
                                 start,
                                 end,
-                                1.0,
+                                max_morph_value,
                                 approach_speed
                             ),
                             "frame_type": "buffer_start",  # 标记为缓冲开始帧
@@ -155,7 +155,7 @@ class Lips:  # pylint: disable=too-few-public-methods
                                 buffer_end,
                                 start,
                                 end,
-                                1.0,
+                                max_morph_value,
                                 approach_speed
                             ),
                             "frame_type": "buffer_end",  # 标记为缓冲结束帧
@@ -253,7 +253,7 @@ class Lips:  # pylint: disable=too-few-public-methods
     @staticmethod
     def mmd_lips_gen(wav_path, buffer=0.05, approach_speed=3.0,
                      # pylint: disable=too-many-arguments,too-many-positional-arguments
-                     db_threshold=-50, rms_threshold=0.01, start_frame=1,
+                     db_threshold=-50, rms_threshold=0.01, max_morph_value=1.0, start_frame=1,
                      fps=24):
         """
         ...
@@ -269,7 +269,8 @@ class Lips:  # pylint: disable=too-few-public-methods
         keyframes_res = Lips.lips_gen(
             phoneme_data_res,
             buffer=buffer,
-            approach_speed=approach_speed
+            approach_speed=approach_speed,
+            max_morph_value=max_morph_value
         )
 
         res = Lips.morph_split(keyframes_res)

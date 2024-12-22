@@ -76,6 +76,7 @@ translation_zh_map = {
     ("*", "Speed Up Opening"): "加速张嘴",
     ("*", "DB Threshold"): "分贝阈值",
     ("*", "RMS Threshold"): "均方根阈值",
+    ("*", "Max Morph Value"): "最大阈值",
     ("Operator", "apply camera settings"): "应用相机设置",
     ("Operator", "Gen Lips"): "口型生成",
     ("Operator", "user doc"): "用户文档",
