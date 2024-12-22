@@ -8,7 +8,7 @@ from ..api.handler.camera import CameraApplySettingsOperator
 from ..api.scene.camera_set_scene import CameraSettingsProperties
 from ..api.scene.mmd_set import (lips_audio_path, lips_start_frame, buffer_frame,
                                  approach_speed, db_threshold, \
-                                 rms_threshold)
+                                 rms_threshold, max_morph_value)
 from ..api.scene.render_preset_scene import (
     resolution_preset, aspect_ratio_preset, orientation_preset)
 from ..api.ui.about import AboutPanel
@@ -93,6 +93,7 @@ class AddonManager:
         scene.approach_speed = approach_speed
         scene.db_threshold = db_threshold
         scene.rms_threshold = rms_threshold
+        scene.max_morph_value = max_morph_value
 
     @staticmethod
     def unregister_scene():
@@ -123,6 +124,8 @@ class AddonManager:
             del scene.db_threshold
         if hasattr(scene, 'rms_threshold'):
             del scene.rms_threshold
+        if hasattr(scene, 'max_morph_value'):
+            del scene.max_morph_value
 
     @staticmethod
     def register_classes():

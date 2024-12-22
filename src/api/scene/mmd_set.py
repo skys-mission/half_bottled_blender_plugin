@@ -35,5 +35,12 @@ rms_threshold = bpy.props.FloatProperty(
     name="RMS Threshold",
     default=0.01,
     min=0.001,
-    max=1,
+    max=1.0,
+)
+
+max_morph_value= bpy.props.FloatProperty(
+    name="Max Morph Value",
+    default=1.0,
+    min=0.01,
+    max=1.0,
 )
