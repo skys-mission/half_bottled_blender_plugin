@@ -21,7 +21,7 @@ class AboutPanel(bpy.types.Panel):  # pylint: disable=too-few-public-methods
     # 面板显示的类别，用于在UI中分组面板
     bl_category = 'Whisky Helper'
     # 面板的显示顺序
-    bl_order = 4
+    bl_order = 5
 
     # 绘制面板中的UI元素
     def draw(self, context):  # pylint: disable=unused-argument
