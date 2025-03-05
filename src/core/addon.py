@@ -8,11 +8,14 @@ from ..api.handler.camera import CameraApplySettingsOperator
 from ..api.scene.camera_set_scene import CameraSettingsProperties
 from ..api.scene.mmd_set import (lips_audio_path, lips_start_frame, buffer_frame,
                                  approach_speed, db_threshold, \
-                                 rms_threshold, max_morph_value)
+                                 rms_threshold, max_morph_value,
+                                 blink_start_frame, blink_end_frame,
+                                 blinking_frequency, blinking_wave_ratio)
 from ..api.scene.render_preset_scene import (
     resolution_preset, aspect_ratio_preset, orientation_preset)
 from ..api.ui.about import AboutPanel
 from ..api.ui.camera_set_panel import CameraSetPanel
+from ..api.ui.mmd_blink_panel import RandomBlinkOperator, RandomBlinkPanel
 from ..api.ui.mmd_set_panel import MMDHelperPanel, GenLipsOperator
 from ..api.ui.render_preset_panel import RenderPresetPanel
 
@@ -32,10 +35,12 @@ class AddonManager:
         CameraSettingsProperties,
         CameraApplySettingsOperator,
         GenLipsOperator,
+        RandomBlinkOperator,
         RenderPresetPanel,
         CameraSetPanel,
         MMDHelperPanel,
         AboutPanel,
+        RandomBlinkPanel,
     )
 
     @staticmethod
@@ -95,8 +100,14 @@ class AddonManager:
         scene.rms_threshold = rms_threshold
         scene.max_morph_value = max_morph_value
 
+        # MMD wink
+        scene.blink_start_frame = blink_start_frame
+        scene.blink_end_frame = blink_end_frame
+        scene.blinking_frequency = blinking_frequency
+        scene.blinking_wave_ratio = blinking_wave_ratio
+
     @staticmethod
-    def unregister_scene():
+    def unregister_scene():  # pylint: disable=too-many-branches
         """
         注销场景属性。
         这些属性包括渲染预设、摄像机设置等。
@@ -126,6 +137,14 @@ class AddonManager:
             del scene.rms_threshold
         if hasattr(scene, 'max_morph_value'):
             del scene.max_morph_value
+        if hasattr(scene, 'blink_start_frame'):
+            del scene.blink_start_frame
+        if hasattr(scene, 'blink_end_frame'):
+            del scene.blink_end_frame
+        if hasattr(scene, 'blinking_frequency'):
+            del scene.blinking_frequency
+        if hasattr(scene, 'blinking_wave_ratio'):
+            del scene.blinking_wave_ratio
 
     @staticmethod
     def register_classes():

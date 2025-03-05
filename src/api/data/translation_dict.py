@@ -77,6 +77,32 @@ translation_zh_map = {
     ("*", "DB Threshold"): "分贝阈值",
     ("*", "RMS Threshold"): "均方根阈值",
     ("*", "Max Morph Value"): "最大阈值",
+    ("*", "Threshold for the maximum value of the morphological key"): "形态键最大值的阈值",
+    ("*", "Minimum threshold for audio root mean square identification"): "识别音频均方根的最小阈值",
+    ("*", "Minimum threshold for audio volume detection"): "识别音频音量的最小阈值",
+    ("*", "The mouth does not open immediately upon recognition;"
+          " the unit is in milliseconds,"
+          " and the buffer value is calculated"
+          " based on the acceleration parameters for opening the mouth"): "不是识别开始就张嘴的，"
+                                                                          "单位毫秒，"
+                                                                          "根据加速张嘴参数计算缓冲值",
+    ("*", "The larger this parameter is, "
+          "the greater the value of the morph key "
+          "for delayed mouth opening will be."): "这个参数越大，延时张嘴的形态键数值就会越大",
+    ("*", "Timeline"): "时间线",
+    ("*", "start frame"): "起始帧",
+    ("*", "end frame"): "结束帧",
+    ("*", "MMD Random Blink"): "MMD 随机眨眼",
+    ("*", "start"): "起始",
+    ("*", "end"): "结束",
+    ("*", "blink interval"): "眨眼间隔",
+    ("*", "The interval in seconds between blinks."): "眨眼的间隔时间，单位秒",
+    ("*", "blinking wave ratio"): "波动比例",
+    ("*","Blink interval = "
+         "blink interval + "
+         "rand(-fluctuation ratio, "
+         "fluctuation ratio)"):"眨眼间隔=眨眼间隔+rand(-波动比例,波动比例)",
+    ("Operator", "Gen random blink"): "生成随机眨眼",
     ("Operator", "apply camera settings"): "应用相机设置",
     ("Operator", "Gen Lips"): "口型生成",
     ("Operator", "user doc"): "用户文档",
