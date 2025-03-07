@@ -9,7 +9,7 @@ from .src.core.addon import AddonManager
 bl_info = {
     "name": "Whisky Helper",
     "author": "Soy Milk Whisky, github.com/skys-mission",
-    "version": (0, 2, 0),
+    "version": (0, 3, 0),
     "blender": (3, 6, 0),
     "location": "View3D > N-Panel  > Whisky Helper",
     "description": "Whisky Helper.",
