@@ -38,6 +38,8 @@ Generates phoneme-based lip animations using Vosk speech recognition models for 
 
 The addon recognizes MMD model shape keys named: あ (A), い (I), う (U), え (E), お (O). If other vowels are missing, they default to あ. Requires at least あ shape key to function.
 
+Warning: This feature will destroy the あ, い, う, え, お form keyframes within the audio time range.
+
 #### Usage
 
 ![lips_gen2.0f.webp](.img/lips_gen2.0f.webp)
@@ -79,8 +81,11 @@ Model Source: KissshotSusu
 
 Generates random blinking animations using the まばたき (Blink) shape key. Create this shape key if missing.
 
+Warning: This feature will destroy the keyframes of まばたき shape keys within the frame range.
+
 1. Select the parent object of an MMD model.
 2. Configure parameters and click "Generate".
+3. Wait until cursor returns to normal.
 
 ![blink_args.webp](.img/blink_args.webp)
 

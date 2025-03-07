@@ -234,8 +234,11 @@ class Lips:  # pylint: disable=too-few-public-methods
 
             # 遍历每个时间帧
             for f in frames:
-                # 将时间转换为帧数
+                # 新增时间戳校验
+                if f['time'] < 0:
+                    continue  # 跳过负时间戳
                 frame_num = int(round(f['time'] * fps)) + start_frame
+                frame_num = max(frame_num, start_frame)
 
                 # 将转换后的帧数据添加到列表中
                 frame_data.append({

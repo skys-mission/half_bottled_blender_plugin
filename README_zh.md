@@ -40,7 +40,7 @@ https://github.com/skys-mission/whisky_helper_for_blender/releases
 
 本插件识别的MMD模型的口型形态键名：あ，い，う，え，お。除了あ以外没有的全部改到あ上，如果没有あ则报错。
 
-如何适配ARM模型
+警告：该功能会破坏音频时间范围内的あ，い，う，え，お形态键关键帧
 
 #### 使用方法
 
@@ -83,6 +83,8 @@ https://github.com/skys-mission/whisky_helper_for_blender/releases
 ### 随机眨眼
 
 随机眨眼识别的是：まばたき ，这个形态键，如果没有你需要自己转化或制作该形态键
+
+警告：该功能会破坏帧数范围内まばたき形态键关键帧
 
 1. 选中一个mmd模型的任意层父级（注意，如果对象下有多个网格体包含这些形态键，则所有网格体的形态键均会被修改）
 2. 建议打开系统控制台观察进度。（Blender菜单栏->windows->Toggle System Console）
