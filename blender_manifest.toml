@@ -1,10 +1,10 @@
 schema_version = "1.0.0"
 
 id = "whisky_helper_by_soy_milk_whisky"
-version = "0.2.0"
+version = "0.3.0"
 name = "Whisky Helper"
 tagline = "Whisky Helper"
-maintainer = "Soy Milk Whisky <skysmission@outlook.com>"
+maintainer = "SoyWhisky <skysmission@outlook.com>"
 
 type = "add-on"
 
@@ -27,8 +27,8 @@ license = [
 ]
 # 可选：某些许可证要求。
 copyright = [
-    "2024-2024 Soy Milk Whisky",
-    "2024 https://github.com/skys-mission/whisky_helper_for_blender",
+    "2024-2025 SoyWhisky",
+    "2025 https://github.com/skys-mission/whisky_helper_for_blender",
 ]
 
 # # 可选：支持的平台列表。不写默认全部

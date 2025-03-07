@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2024, https://github.com/skys-mission and SoyMilkWhisky
+# Copyright (c) 2025, https://github.com/skys-mission and SoyWhisky
 """
 Blender Addon 入口
 """
@@ -8,7 +8,7 @@ from .src.core.addon import AddonManager
 # 注册插件信息
 bl_info = {
     "name": "Whisky Helper",
-    "author": "Soy Milk Whisky, github.com/skys-mission",
+    "author": "SoyWhisky, github.com/skys-mission",
     "version": (0, 3, 0),
     "blender": (3, 6, 0),
     "location": "View3D > N-Panel  > Whisky Helper",
