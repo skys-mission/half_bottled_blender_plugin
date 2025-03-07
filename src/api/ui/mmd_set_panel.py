@@ -170,15 +170,15 @@ def find_mesh():
     return found_objects
 
 
-def set_lips_to_mesh(mesh, lips, start_frame):
+def set_lips_to_mesh(mesh, lips, start_frame): # pylint: disable=too-many-locals,too-many-branches
     """
-    将嘴唇动画应用到网格模型上。
+    将 lips 数据应用到网格模型上。
 
-    :param mesh: 网格模型对象，用于应用嘴唇动画。
-    :param lips: 包含嘴唇动画数据的字典，键为形态键名称，值为包含帧信息的列表。
+    :param mesh: 网格模型对象，用于应用 lips 数据。
+    :param lips: 包含 lips 数据的字典，键为形态键名称，值为包含帧信息的列表。
     :param start_frame: 开始应用动画的帧号。
     """
-    # 定义口型的列表，用于后续的遍历和清理关键帧。
+    # 定义口型列表，用于后续的遍历和清理关键帧。
     morph_list = ['あ', 'い', 'う', 'え', 'お']
     # 初始化最大帧数，用于确定动画的结束点。
     max_frame = 0
@@ -188,13 +188,46 @@ def set_lips_to_mesh(mesh, lips, start_frame):
             max_frame = max(m['frame'], max_frame)
 
     # 清除所有口型在最大帧范围内的现有关键帧。
+    # 修改前的问题代码：
+    # for i in range(start_frame, max_frame + 1, 1):
+
+    # 修改后的关键帧清除逻辑：
+    # 确保只清除起始帧之后的关键帧
+    start = max(start_frame, 1)  # 起始帧最小为1
+    end = max(max_frame, start_frame)
+
+    # 获取实际存在的形态键列表
+    existing_morphs = [
+        k.name for k in mesh.data.shape_keys.key_blocks
+    ] if mesh.data.shape_keys else []
+
+    # 修改后的清除逻辑：仅处理存在的形态键
     for morph_key in morph_list:
-        for i in range(start_frame, max_frame + 1, 1):
-            clear_shape_key_keyframe(mesh, morph_key, i)
+        if morph_key in existing_morphs:
+            for i in range(start, end + 1):
+                clear_shape_key_keyframe(mesh, morph_key, i)
+
+    # 强制设置起始帧零值（仅处理存在的形态键）
+    for morph in morph_list:
+        if morph in existing_morphs:
+            # 检查是否已存在起始帧关键帧
+            existing_frames = [m['frame'] for m in lips.get(morph, [])]
+            if start_frame not in existing_frames:
+                set_shape_key_value(mesh, morph, 0.0, start_frame, 'KEYFRAME')
+
+    # 应用关键帧时跳过起始帧
+    for morph_key, frames in lips.items():
+        if morph_key not in existing_morphs:
+            continue
+
+        valid_frames = [m for m in frames if m['frame'] > start_frame]
+        for m in valid_frames:
+            set_shape_key_value(mesh, morph_key, m['value'], m['frame'], m['frame_type'])
+
             # 以下行为注释，可能是为了记录或调试目的保留。
             # set_shape_key_value(mesh, morph_key, 0.0, i)
 
-    # 应用嘴唇动画数据到网格模型。
+    # 应用 lips 数据到网格模型。
     for k, v in lips.items():
         morph_key = k
         # 查找与当前口型键匹配的形状键。
@@ -207,7 +240,10 @@ def set_lips_to_mesh(mesh, lips, start_frame):
 
         # 设置当前口型的关键帧。
         for m in v:
-            set_shape_key_value(mesh, morph_key, m['value'], m['frame'], m['frame_type'])
+            # 新增帧范围校验
+            valid_frames = [m for m in v if m['frame'] >= start_frame]
+            for m in valid_frames:
+                set_shape_key_value(mesh, morph_key, m['value'], m['frame'], m['frame_type'])
             # 记录日志信息，确认关键帧设置成功。
             Log.info(f"Set shape key '{morph_key}' to {m['value']} {m['frame']}")
 
