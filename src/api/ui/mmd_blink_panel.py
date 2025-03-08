@@ -148,7 +148,7 @@ class RandomBlinkOperator(bpy.types.Operator):
                     f"Successfully set shape key '{morph_key}':"
                     f" frame {frame_data['frame']}, value {frame_data['value']}")
             except Exception as e:
-                Log.warning(f"关键帧设置失败：{str(e)}")
+                Log.warning(f"Keyframe setting failed.：{str(e)}")
                 raise
 
     @staticmethod

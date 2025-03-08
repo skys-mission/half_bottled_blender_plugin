@@ -170,7 +170,7 @@ def find_mesh():
     return found_objects
 
 
-def set_lips_to_mesh(mesh, lips, start_frame): # pylint: disable=too-many-locals,too-many-branches
+def set_lips_to_mesh(mesh, lips, start_frame):  # pylint: disable=too-many-locals,too-many-branches
     """
     将 lips 数据应用到网格模型上。
 
@@ -238,14 +238,12 @@ def set_lips_to_mesh(mesh, lips, start_frame): # pylint: disable=too-many-locals
             # 如果没有找到匹配的形状键，使用默认的'あ'。
             morph_key = 'あ'
 
-        # 设置当前口型的关键帧。
-        for m in v:
-            # 新增帧范围校验
-            valid_frames = [m for m in v if m['frame'] >= start_frame]
-            for m in valid_frames:
-                set_shape_key_value(mesh, morph_key, m['value'], m['frame'], m['frame_type'])
-            # 记录日志信息，确认关键帧设置成功。
-            Log.info(f"Set shape key '{morph_key}' to {m['value']} {m['frame']}")
+        # 批量处理有效关键帧
+        valid_frames = (m for m in v if m['frame'] >= start_frame)
+
+        for m in valid_frames:
+            set_shape_key_value(mesh, morph_key, m['value'], m['frame'], m['frame_type'])
+            Log.info(f"Set shape key '{morph_key}' with frame {m['frame']} and value {m['value']}")
 
 
 def set_shape_key_value(obj, shape_key_name, value, frame, f_type):
