@@ -82,10 +82,10 @@ class GenLipsOperator(bpy.types.Operator):  # pylint: disable=too-few-public-met
 
         # 将鼠标指针调整为进度指示器
         context.window.cursor_modal_set('WAIT')
-        context.window_manager.progress_update(99)
+        context.window_manager.progress_update(98)
         try:
             lips = Lips.mmd_lips_gen(
-                context.scene.lips_audio_path,
+                wav_path=context.scene.lips_audio_path,
                 buffer=context.scene.buffer_frame,
                 approach_speed=context.scene.approach_speed,
                 db_threshold=context.scene.db_threshold,
@@ -179,7 +179,7 @@ def set_lips_to_mesh(mesh, lips, start_frame):  # pylint: disable=too-many-local
     :param start_frame: 开始应用动画的帧号。
     """
     # 定义口型列表，用于后续的遍历和清理关键帧。
-    morph_list = ['あ', 'い', 'う', 'え', 'お']
+    morph_list = ['あ', 'い', 'う', 'え', 'お', 'ん']
     # 初始化最大帧数，用于确定动画的结束点。
     max_frame = 0
     # 遍历嘴唇动画数据，找到最大的帧数。
@@ -215,24 +215,12 @@ def set_lips_to_mesh(mesh, lips, start_frame):  # pylint: disable=too-many-local
             if start_frame not in existing_frames:
                 set_shape_key_value(mesh, morph, 0.0, start_frame, 'KEYFRAME')
 
-    # 应用关键帧时跳过起始帧
-    for morph_key, frames in lips.items():
-        if morph_key not in existing_morphs:
-            continue
-
-        valid_frames = [m for m in frames if m['frame'] > start_frame]
-        for m in valid_frames:
-            set_shape_key_value(mesh, morph_key, m['value'], m['frame'], m['frame_type'])
-
-            # 以下行为注释，可能是为了记录或调试目的保留。
-            # set_shape_key_value(mesh, morph_key, 0.0, i)
-
     # 应用 lips 数据到网格模型。
-    for k, v in lips.items():
+    for k, v in lips.items():  # pylint: disable=too-many-nested-blocks
         morph_key = k
         # 查找与当前口型键匹配的形状键。
-        for key_block in mesh.data.shape_keys.key_blocks:
-            if key_block.name == morph_key:
+        for key_block_name in existing_morphs:
+            if key_block_name == morph_key:
                 break
         else:
             # 如果没有找到匹配的形状键，使用默认的'あ'。
@@ -242,8 +230,43 @@ def set_lips_to_mesh(mesh, lips, start_frame):  # pylint: disable=too-many-local
         valid_frames = (m for m in v if m['frame'] >= start_frame)
 
         for m in valid_frames:
-            set_shape_key_value(mesh, morph_key, m['value'], m['frame'], m['frame_type'])
-            Log.info(f"Set shape key '{morph_key}' with frame {m['frame']} and value {m['value']}")
+            adjusted_value = 0
+            if m['value'] > 0:
+                # 新增逻辑开始
+                sum_values = 0.0
+                morph_list = ['あ', 'い', 'う', 'え', 'お', 'ん']
+                count = 0
+                for morph in morph_list:
+                    if (morph in existing_morphs) and morph != morph_key:  # existing_morphs已定义
+                        current_val = get_shape_key_value_at_frame(mesh, morph, m['frame'])
+                        if current_val is not None:
+                            sum_values += current_val
+                            count += 1
+
+                if (morph_key in ['あ', 'お']) and count > 0:
+                    if count > 1:
+                        adjusted_value = m['value'] - ((sum_values / count) * 1.2)
+                    else:
+                        adjusted_value = m['value'] - (sum_values / count)
+                if (morph_key in ['い', 'う', 'え']) and count > 0:
+                    if count > 1:
+                        adjusted_value = m['value'] - ((sum_values / count) * 0.9)
+                    else:
+                        adjusted_value = m['value'] - (sum_values / count) * 0.55
+                if (morph_key == 'ん') and (count > 0):
+                    adjusted_value = m['value'] - (sum_values / count)
+                    adjusted_value *= 0.3
+                adjusted_value = max(adjusted_value, 0.0)  # 确保结果>0
+                adjusted_value = min(adjusted_value, 0.99)  # 限制到0.8以内
+
+            set_shape_key_value(
+                obj=mesh,
+                shape_key_name=morph_key,
+                value=adjusted_value,
+                frame=m['frame'],
+                f_type=m['frame_type'])
+            Log.info(f"Set shape key '{morph_key}' "
+                     f"with frame {m['frame']} and value {adjusted_value}")
 
 
 def set_shape_key_value(obj, shape_key_name, value, frame, f_type):
@@ -323,5 +346,37 @@ def get_shape_key_value(obj, shape_key_name):
         Log.warning(f"The shape key '{shape_key_name}' does not exist.")
         return None
 
+    Log.warning("The object is not of the mesh type.")
+    return None
+
+
+def get_shape_key_value_at_frame(obj, shape_key_name, frame):
+    """
+    获取指定对象的形态键在特定帧的值，不切换帧。
+
+    :param obj: Blender 对象
+    :param shape_key_name: 形态键名称
+    :param frame: 目标帧
+    :return: 形态键的值（如果存在），否则返回 None
+    """
+    if obj and obj.type == 'MESH':  # pylint: disable=too-many-nested-blocks
+        shape_keys = obj.data.shape_keys
+        if shape_keys and shape_key_name in shape_keys.key_blocks:
+            # 获取动画数据
+            anim_data = shape_keys.animation_data
+            if anim_data and anim_data.action:
+                # 查找对应的 F-Curve
+                for fcu in anim_data.action.fcurves:
+                    if fcu.data_path == f'key_blocks["{shape_key_name}"].value':
+                        # 在 F-Curve 中查找目标帧的值
+                        for keyframe in fcu.keyframe_points:
+                            if keyframe.co[0] == frame:  # co[0] 是帧号
+                                return keyframe.co[1]  # co[1] 是值
+                        # 如果没有找到关键帧，则插值计算
+                        return fcu.evaluate(frame)
+            # 如果没有动画数据，返回当前值
+            return shape_keys.key_blocks[shape_key_name].value
+        Log.warning(f"The shape key '{shape_key_name}' does not exist.")
+        return None
     Log.warning("The object is not of the mesh type.")
     return None

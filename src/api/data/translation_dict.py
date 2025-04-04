@@ -27,7 +27,7 @@ def get_translation_zh_dict(local):
 translation_zh_map = {
     ("*", "MMD Lip Gen"): "MMD口型生成",
     ("*", "Audio Path"): "音频文件",
-    ("*", "Bilibili cover image"): "B站封面",
+    ("*", "Bilibili cover image"): "必剪封面",
     ("*", "382:239 Bilibili cover image"): "382:239 B站封面",
     ("*", "Other"): "其它",
     ("*", "Old Film Standards"): "旧电影标准",

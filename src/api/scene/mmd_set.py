@@ -21,7 +21,7 @@ buffer_frame = bpy.props.FloatProperty(
                 " the unit is in milliseconds,"
                 " and the buffer value is calculated"
                 " based on the acceleration parameters for opening the mouth",
-    default=0.12,
+    default=0.15,
     min=0.02,
     max=1.0)
 
@@ -29,7 +29,7 @@ approach_speed = bpy.props.FloatProperty(
     name="Speed Up Opening",
     description="The larger this parameter is, "
                 "the greater the value of the morph key for delayed mouth opening will be.",
-    default=3,
+    default=1.6,
     min=1,
     max=10,
 )
@@ -44,7 +44,7 @@ db_threshold = bpy.props.FloatProperty(
 rms_threshold = bpy.props.FloatProperty(
     name="RMS Threshold",
     description="Minimum threshold for audio root mean square identification",
-    default=0.03,
+    default=0.05,
     min=0.001,
     max=1.0,
 )
@@ -52,7 +52,7 @@ rms_threshold = bpy.props.FloatProperty(
 max_morph_value = bpy.props.FloatProperty(
     name="Max Morph Value",
     description="Threshold for the maximum value of the morphological key",
-    default=0.91,
+    default=0.97,
     min=0.01,
     max=1.0,
 )
