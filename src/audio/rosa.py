@@ -7,14 +7,27 @@
 import os
 import sys
 from typing import List, Tuple
-
+import bpy  # pylint: disable=import-error
 
 def load_pkg():
     """
     ...
     """
     addon_dir = os.path.abspath(os.path.dirname(__file__))
-    sys.path.append(os.path.join(addon_dir, 'plib'))
+    
+    # 获取Blender版本
+    version = bpy.app.version
+    major, minor = version[0], version[1]
+    
+    # 根据版本选择不同的plib路径
+    # 原条件判断存在逻辑漏洞，优化后：
+    if (major == 3 and minor >= 6) or (major == 4 and minor == 0):
+        sys.path.append(os.path.join(addon_dir, 'plib310'))
+    elif major > 4 or (major == 4 and minor >= 1):
+        sys.path.append(os.path.join(addon_dir, 'plib311'))
+    else:
+        raise ValueError(f"Unsupported Blender version: {major}.{minor}")
+
 
 
 load_pkg()
@@ -78,6 +91,8 @@ def classify_vowel(formants):
             vowels.append('silence')
             continue
 
+        if f1 < 400 and 700 <= (f2 - f1) <= 1200:
+            vowels.append('n')
         # 元音分类规则
         if f1 > 700 and 1000 <= f2 <= 1200:
             vowels.append('a')
@@ -90,7 +105,7 @@ def classify_vowel(formants):
         elif f1 < 400 and f2 < 1000:
             vowels.append('u')
         else:
-            vowels.append('a')  # 未知音素，默认标记为 "unknown"
+            vowels.append('e')  # 未知音素，默认标记为 "unknown"
     return vowels
 
 
@@ -109,62 +124,75 @@ def rosa(audio_path, db_threshold=-50, rms_threshold=0.01):
     ]
     # import pprint
     # pprint.pprint(vowel_sequence_with_timestamps)
-    vowels = process_vowel_sequence(vowel_sequence_with_timestamps)
-    res = replace_vowels(vowels)
+    res = process_vowel_sequence(vowel_sequence_with_timestamps)
     # for item in res:
     #     print(item)
-
+    # 删除 audio_path 文件，如果文件存在
+    if os.path.exists(audio_path):
+        try:
+            os.remove(audio_path)
+        except Exception as e:
+            print(f"删除临时文件 {audio_path} 时出错: {e}")
     return res
 
 
-def process_vowel_sequence(vowel_sequence_with_timestamps: List[dict]) -> (
-        List)[Tuple[float, float, str]]:
+def process_vowel_sequence(vowel_sequence_with_timestamps: List[dict]) -> List[Tuple[float, float, str]]:
+    """处理带有时间戳的元音序列，进行分组、调整和去重叠操作。
+
+    Args:
+        vowel_sequence_with_timestamps: 包含元音及其时间戳的字典列表。每个字典必须包含"vowel"（元音类型字符串）和"timestamp"（时间戳浮点数）键。
+
+    Returns:
+        处理后的元音时间段列表。每个元素为（起始时间, 结束时间, 元音类型）的元组，满足以下条件：
+        1. 连续相同元音合并为一个时间段
+        2. 短时间元音扩展为0.5秒
+        3. 过长元音分割为0.5秒块
+        4. 相同元音的相邻时间段合并
     """
-    ...
-    """
-    filtered_vowels = [item for item in vowel_sequence_with_timestamps if
-                       item["vowel"] != "silence"]
+
+    # 过滤掉静音标记并初始化分组
+    filtered_vowels = [item for item in vowel_sequence_with_timestamps if item["vowel"] != "silence"]
 
     grouped_vowels = []
     if not filtered_vowels:
         return grouped_vowels
 
+    # 初始化第一个分组的起始时间和元音类型
     start_time = filtered_vowels[0]["timestamp"]
     current_vowel = filtered_vowels[0]["vowel"]
 
+    # 遍历过滤后的元音序列进行分组，将连续相同元音合并为时间段
     for i in range(1, len(filtered_vowels)):
         current_item = filtered_vowels[i]
         if current_item["vowel"] != current_vowel:
-            # Save the current vowel group
             grouped_vowels.append((start_time, filtered_vowels[i - 1]["timestamp"], current_vowel))
-            # Start a new group
             start_time = current_item["timestamp"]
             current_vowel = current_item["vowel"]
 
-    # Append the last group
+    # 添加最后一个分组
     grouped_vowels.append((start_time, filtered_vowels[-1]["timestamp"], current_vowel))
 
+    # 调整短时间元音的时间范围（单帧处理）
     adjusted_vowels = []
     for start, end, vowel in grouped_vowels:
         duration = end - start
-        if duration < 0.01:  # Treat as a single frame
+        if duration < 0.01:
             adjusted_start = max(0, start - 0.25)
             adjusted_end = end + 0.25
             adjusted_vowels.append((adjusted_start, adjusted_end, vowel))
         else:
             adjusted_vowels.append((start, end, vowel))
 
+    # 处理时间范围，确保每个元音至少0.5秒或分割过长段
     final_vowels = []
     for start, end, vowel in adjusted_vowels:
         duration = end - start
         if duration <= 0.5:
-            # Extend duration to 0.5s, split evenly around the original segment
             center = (start + end) / 2
             new_start = center - 0.25
             new_end = center + 0.25
             final_vowels.append((new_start, new_end, vowel))
         else:
-            # Split the duration into chunks of approximately 0.5s, avoiding overlaps
             num_chunks = int(duration / 0.5)
             remainder = duration % 0.5
             chunk_duration = 0.5 + (remainder / num_chunks) if num_chunks > 0 else 0.5
@@ -175,46 +203,26 @@ def process_vowel_sequence(vowel_sequence_with_timestamps: List[dict]) -> (
                 final_vowels.append((current_start, current_end, vowel))
                 current_start = current_end
 
-            # Add any remaining duration as the last chunk
             if current_start < end:
                 final_vowels.append((current_start, end, vowel))
 
-    # Ensure no overlapping chunks for the same vowel
+    # 合并重叠的相同元音时间段
     non_overlapping_vowels = []
     for i, (start, end, vowel) in enumerate(final_vowels):
         if i > 0 and vowel == final_vowels[i - 1][2]:
-            # Ensure the current segment starts after the previous one
             prev_end = non_overlapping_vowels[-1][1]
             if start < prev_end:
                 start = prev_end
-            end = max(end, start)  # Ensure end > start
+            end = max(end, start)  # 确保结束时间不早于起始时间
         non_overlapping_vowels.append((start, end, vowel))
 
     return non_overlapping_vowels
+
 
 
 # # Output Result
 # for item in result:
 #     print(item)
 
-def replace_vowels(vowel_sequences: List[Tuple[float, float, str]]) -> (
-        List)[Tuple[float, float, str]]:
-    """
-    ...
-    """
-    replacement_map = {
-        "a": "AA",
-        "e": "EH",
-        "o": "AO",
-        "i": "IY",
-        "u": "UW"
-    }
-
-    replaced_sequences = [
-        (start, end, replacement_map.get(vowel, vowel))  # 如果元音存在于替换表中，替换；否则保持原样
-        for start, end, vowel in vowel_sequences
-    ]
-
-    return replaced_sequences
 
 # rosa("F:\\OBS_Video\\test_whiskyai_xyz_16000.wav",-50,0.01)

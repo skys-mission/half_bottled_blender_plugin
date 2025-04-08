@@ -17,38 +17,6 @@ class Lips:  # pylint: disable=too-few-public-methods
     """
     ...
     """
-    # 定义音素到口型的映射规则
-    _phoneme_to_morph = {
-        # 转换为 "a"
-        "AA": "a", "AE": "a", "AH": "a", "AY": "a",
-
-        # 转换为 "e"
-        "EH": "e", "ER": "e", "R": "e",
-
-        # 转换为 "o"
-        "AO": "o", "AW": "o", "OY": "o",
-
-        # 转换为 "i"
-        "IY": "i", "IH": "i", "EY": "i",
-
-        # 转换为 "u"
-        "UW": "u", "UH": "u", "OW": "u",
-
-        # 转换为 "N"
-        "M": "N", "N": "N", "NG": "N",
-
-        # 转换为 "close" (闭嘴)
-        "B": "close", "P": "close", "T": "close", "D": "close",
-        "K": "close", "G": "close", "F": "close", "V": "close",
-
-        # 转换为 None (静止)
-        "TH": None, "DH": None, "S": None, "Z": None, "SH": None,
-        "ZH": None, "CH": None, "JH": None, "Y": None, "W": None,
-        "L": None, "HH": None,
-
-        # 默认值
-        "default": "close"
-    }
 
     @staticmethod
     def _clamp(value, min_value, max_value):
@@ -97,12 +65,7 @@ class Lips:  # pylint: disable=too-few-public-methods
 
         lips = []
 
-        for start, end, phoneme in phoneme_data:
-            # 提取音素的基础部分（去掉音调标记：如 IY1 -> IY）
-            base_phoneme = ''.join([c for c in phoneme if not c.isdigit()])
-
-            # 获取对应的口型
-            morph = Lips._phoneme_to_morph.get(base_phoneme, None)
+        for start, end, morph in phoneme_data:
             if morph:
                 # 添加起始关键帧
                 lips.append({
@@ -182,7 +145,7 @@ class Lips:  # pylint: disable=too-few-public-methods
         dict: 一个字典，包含根据 morph 值分类后的 lips 元素列表。
         """
         # 定义需要的 morph 值集合，这些是嘴唇形态的元音值
-        target_morphs = {'a', 'e', 'i', 'o', 'u'}
+        target_morphs = {'a', 'e', 'i', 'o', 'u', 'n'}
 
         # 初始化结果字典，为每个目标 morph 值创建一个空列表
         result = {morph: [] for morph in target_morphs}
@@ -219,7 +182,8 @@ class Lips:  # pylint: disable=too-few-public-methods
             'i': 'い',
             'u': 'う',
             'e': 'え',
-            'o': 'お'
+            'o': 'お',
+            'n': 'ん'
         }
 
         # 初始化结果字典

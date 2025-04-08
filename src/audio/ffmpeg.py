@@ -6,33 +6,34 @@ ffmpeg
 import subprocess
 import os
 import platform
+import random
+from pathlib import Path
 
 
 def convert_to_wav_16000(audio_path):
     """
-    Converts any audio file to WAV format with a sampling rate of 16000Hz.
-    The function generates a file with the same name as the input file but with a .wav extension
-    in the current script directory.
-
-    Parameters:
-    - audio_path (str): Input audio file path.
-
     Returns:
-    - str: Path of the converted audio file (.wav).
+    - str: Path of the converted audio file (.wav) in the same directory as input file.
     """
     # Ensure the input file exists
     if not os.path.isfile(audio_path):
         raise FileNotFoundError(f"Input file does not exist: {audio_path}")
 
     # Retrieve file name and target file path
-    base_name = os.path.splitext(os.path.basename(audio_path))[0]
-    output_path = f"{os.path.join(os.path.dirname(audio_path), base_name)}_whiskyai_xyz_16000.wav"
+    base_name = Path(audio_path).stem  # 获取文件名（不含扩展）
+
+    # 在路径中拼接随机数
+    output_path = (Path(audio_path).parent /
+                   f"{base_name}_soywhisky16hz_{random.randint(100, 999)}.wav")
 
     # Get the current script directory
     script_dir = os.path.dirname(os.path.abspath(__file__))
 
     # Check the operating system type and set the ffmpeg path
-    ffmpeg_filename = "ffmpeg.exe" if platform.system() == "Windows" else "ffmpeg"
+    if platform.system() == "Windows":
+        ffmpeg_filename = "ffmpeg.exe"
+    else:
+        ffmpeg_filename = "ffmpeg"
     ffmpeg_path = os.path.join(script_dir, "lib", ffmpeg_filename)
 
     # Check if the ffmpeg executable exists
@@ -42,9 +43,22 @@ def convert_to_wav_16000(audio_path):
             f"Please ensure the file exists and is executable."
         )
 
+    # 自动处理执行权限（仅非Windows系统）
+    if platform.system() != "Windows" and not os.access(ffmpeg_path, os.X_OK):
+        try:
+            os.chmod(ffmpeg_path, 0o755)  # 赋予可执行权限
+        except Exception as e:
+            raise PermissionError(
+                f"Failed to make FFmpeg executable at {ffmpeg_path}. "
+                f"Please run manually: chmod +x {ffmpeg_path}"
+            ) from e
+
     command = [
         ffmpeg_path,
-        "-i", audio_path,  # 输入文件路径
+        "-i", audio_path,
+        "-max_muxing_queue_size", "1024",  # 处理复杂流时防止阻塞
+        "-buffer_size", "4096K",  # 设置解码器缓冲区大小
+        "-threads", str(os.cpu_count() or 2),  # 使用所有可用CPU核心
         "-af", "loudnorm=I=-14:LRA=11:TP=-1.5",  # 使用 loudnorm 滤镜，设置到 YouTube 推荐标准
         "-ar", "16000",  # 采样率 16000Hz
         "-ac", "1",  # 单声道
@@ -54,15 +68,12 @@ def convert_to_wav_16000(audio_path):
 
     # Call ffmpeg
     try:
-        res = subprocess.run(command, check=True)
-        if res.returncode != 0:
-            raise RuntimeError(f"ffmpeg returned non-zero exit code: {res.returncode}")
+        subprocess.run(command, check=True, timeout=1800)  # 直接捕获异常
     except subprocess.CalledProcessError as e:
-        raise RuntimeError(f"Failed to call ffmpeg: {e.stderr.decode('utf-8')}") from e
+        raise RuntimeError(f"FFmpeg failed: {e.stderr.decode()}") from e
 
     # Return the generated file path
     return output_path
-
 
 # 示例用法
 # if __name__ == "__main__":

@@ -9,12 +9,12 @@ from .src.core.addon import AddonManager
 bl_info = {
     "name": "Whisky Helper",
     "author": "SoyWhisky, github.com/skys-mission",
-    "version": (0, 3, 1),
+    "version": (0, 3, 2),
     "blender": (3, 6, 0),
     "location": "View3D > N-Panel  > Whisky Helper",
     "description": "Whisky Helper.",
     "category": "3D View",
-    "doc_url": "https://whiskyai.xyz/doc/blender/addon/whisky_helper_for_blender",
+    "doc_url": "https://soywhisky.com/doc/blender/addon/whisky_helper_for_blender",
     "tracker_url": "https://github.com/skys-mission/whisky_helper_for_blender/issues"
 }
 
