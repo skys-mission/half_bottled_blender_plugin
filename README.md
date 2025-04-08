@@ -50,7 +50,7 @@ Warning: This feature will overwrite any existing keyframes for the あ, い, �
 1. Select an audio file in "Audio Path" (most common audio formats, including MP4, should work).
 2. Select any parent layer of an MMD model (note: if the object contains multiple meshes with these morph keys, all will be modified).
 3. It is recommended to open the system console to monitor progress (Blender menu bar -> Windows -> Toggle System Console). macOS Blender does not have this feature.
-4. Set the parameters and click "Generate" (note: the current version will generate readable cache files in the same directory as the audio file and will not delete them).
+4. Set the parameters and click "Generate" (~~note: the current version will generate readable cache files in the same directory as the audio file and will not delete them~~).
 5. Wait until the mouse cursor changes back from a number to normal.
 
 #### Parameter Description
