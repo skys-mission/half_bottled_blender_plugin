@@ -4,7 +4,7 @@
 [![CodeQL Advanced](https://github.com/skys-mission/whisky_helper_for_blender/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/skys-mission/whisky_helper_for_blender/actions/workflows/codeql.yml)
 [![Bandit](https://github.com/skys-mission/whisky_helper_for_blender/actions/workflows/bandit.yml/badge.svg)](https://github.com/skys-mission/whisky_helper_for_blender/actions/workflows/bandit.yml)
 
-Other languages: [简体中文](README_zh.md), (Currently unable to translate more)
+Other languages: [简体中文](README_zh.md), [日本語](README_ja.md)
 
 A Blender add-on that uses the Vosk model to recognize lip-sync movements and generate keyframes, random blinking, and some other small features I commonly use.
 

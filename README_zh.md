@@ -4,7 +4,7 @@
 [![CodeQL Advanced](https://github.com/skys-mission/whisky_helper_for_blender/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/skys-mission/whisky_helper_for_blender/actions/workflows/codeql.yml)
 [![Bandit](https://github.com/skys-mission/whisky_helper_for_blender/actions/workflows/bandit.yml/badge.svg)](https://github.com/skys-mission/whisky_helper_for_blender/actions/workflows/bandit.yml)
 
-其它语言：[English](README.md), (Currently unable to translate more)
+其它语言：[English](README.md), [日本語](README_ja.md)
 
 一个Blender插件，可以通过vosk模型识别口型动作并生成关键帧，随机眨眼，还有一些我个人常用的小功能。
 
