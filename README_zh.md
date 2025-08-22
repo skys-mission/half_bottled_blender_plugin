@@ -6,10 +6,13 @@
 
 其它语言：[English](README.md), [日本語](README_ja.md)
 
-一个Blender插件，可以通过vosk模型识别口型动作并生成关键帧，随机眨眼，还有一些我个人常用的小功能。
+一个blender的动画视频爱好者做的小插件。主要功能：MMD口型生成（计划拓展），MMD眨眼生成等功能。
 
-可以在Github Release页面下载最新版本。支持windows-x64，macos-arm64。
+即将更名为：half_bottled_blender_plugin，预计对相关功能都进行一定的优化迭代。
 
+原：whisky_helper_for_blender插件，主要功能是生成MMD模型的口型关键帧。
+
+实际上只是我之前做MMD视频时，自己搞的小东西，可能会有一些我常用的小功能，之后不一定再开发维护。
 
 <!-- TOC -->
 * [whisky_helper_for_blender](#whisky_helper_for_blender)
@@ -32,7 +35,11 @@
 
 ## Download
 
-https://github.com/skys-mission/whisky_helper_for_blender/releases
+https://github.com/skys-mission/half_bottled_blender_plugin/releases
+
+中国大陆用户：
+
+链接: https://pan.baidu.com/s/17ubgxZvXVs6goKBjtBFzXA?pwd=gmuv 提取码: gmuv 
 
 ## 功能
 
@@ -43,6 +50,7 @@ https://github.com/skys-mission/whisky_helper_for_blender/releases
 本插件识别的MMD模型的口型形态键名：あ，い，う，え，お, ん。除了あ以外没有的全部改到あ上，如果没有あ则报错。
 
 警告：该功能会破坏音频时间范围内的あ，い，う，え，お, ん形态键关键帧
+
 
 #### 使用方法
 
@@ -120,6 +128,7 @@ https://github.com/skys-mission/whisky_helper_for_blender/releases
 
 - 当前支持
     - windows-x64
+- 可能支持
     - macos-arm64
 - 不计划支持
     - linux（除非出现重大变故，否则不计划支持）
