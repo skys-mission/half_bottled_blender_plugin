@@ -1,4 +1,4 @@
-# whisky_helper_for_blender
+# half_bottled_blender_plugin
 
 [![Pylint](https://github.com/skys-mission/whisky_helper_for_blender/actions/workflows/pylint.yml/badge.svg?branch=main)](https://github.com/skys-mission/whisky_helper_for_blender/actions/workflows/pylint.yml)
 [![CodeQL Advanced](https://github.com/skys-mission/whisky_helper_for_blender/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/skys-mission/whisky_helper_for_blender/actions/workflows/codeql.yml)
@@ -15,7 +15,7 @@ Originally: the whisky_helper_for_blender plugin, primarily used for generating 
 Actually, it's just a small tool I made for myself when creating MMD videos. It may include some features I commonly use, but I may not continue developing or maintaining it.
 
 <!-- TOC -->
-* [whisky_helper_for_blender](#whisky_helper_for_blender)
+* [half_bottled_blender_plugin](#half_bottled_blender_plugin)
   * [Download](#download)
   * [Features](#features)
     * [MMD Lip-Sync Generation](#mmd-lip-sync-generation)

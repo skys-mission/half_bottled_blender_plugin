@@ -1,4 +1,4 @@
-# whisky_helper_for_blender
+# half_bottled_blender_plugin
 
 [![Pylint](https://github.com/skys-mission/whisky_helper_for_blender/actions/workflows/pylint.yml/badge.svg?branch=main)](https://github.com/skys-mission/whisky_helper_for_blender/actions/workflows/pylint.yml)
 [![CodeQL Advanced](https://github.com/skys-mission/whisky_helper_for_blender/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/skys-mission/whisky_helper_for_blender/actions/workflows/codeql.yml)
@@ -15,7 +15,7 @@
 实际上只是我之前做MMD视频时，自己搞的小东西，可能会有一些我常用的小功能，之后不一定再开发维护。
 
 <!-- TOC -->
-* [whisky_helper_for_blender](#whisky_helper_for_blender)
+* [half_bottled_blender_plugin](#half_bottled_blender_plugin)
   * [Download](#download)
   * [功能](#功能)
     * [MMD口型生成](#mmd口型生成)

@@ -1,4 +1,4 @@
-# whisky_helper_for_blender
+# half_bottled_blender_plugin
 
 [![Pylint](https://github.com/skys-mission/whisky_helper_for_blender/actions/workflows/pylint.yml/badge.svg?branch=main)](https://github.com/skys-mission/whisky_helper_for_blender/actions/workflows/pylint.yml)
 [![CodeQL Advanced](https://github.com/skys-mission/whisky_helper_for_blender/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/skys-mission/whisky_helper_for_blender/actions/workflows/codeql.yml)
@@ -15,7 +15,7 @@ Blenderのアニメーション動画愛好家が作成したBlender用アドオ
 実際には、以前MMD動画を作成していた時に自分で作った小さなツールで、自分がよく使う機能がいくつか含まれているかもしれませんが、今後は開発・メンテナンスを継続するかどうかは分かりません。
 
 <!-- TOC -->
-* [whisky_helper_for_blender](#whisky_helper_for_blender)
+* [half_bottled_blender_plugin](#half_bottled_blender_plugin)
   * [ダウンロード](#ダウンロード)
   * [機能](#機能)
     * [MMD口形生成](#mmd口形生成)
